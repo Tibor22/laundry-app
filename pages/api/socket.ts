@@ -7,12 +7,9 @@ const SocketHandler = (req, res) => {
 		console.log('Socket is initializing');
 		const io = new Server(res.socket.server);
 		res.socket.server.io = io;
-
 		io.on('connection', (socket) => {
-			console.log('socket', socket.id);
-			socket.on('input-change', (msg) => {
-				console.log('message:', msg);
-				socket.broadcast.emit('update-input', msg);
+			socket.on('send_waiting_list', (waitingList) => {
+				socket.broadcast.emit('receive_waiting_list', waitingList);
 			});
 		});
 	}
