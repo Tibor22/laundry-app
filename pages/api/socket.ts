@@ -1,7 +1,7 @@
 import { Server } from 'Socket.IO';
-
-const SocketHandler = (req, res) => {
-	if (res.socket.server.io) {
+import { Request, Response } from 'express';
+const SocketHandler = (req: Request, res: any) => {
+	if (res?.socket.server.io) {
 		console.log('Socket is already running');
 	} else {
 		console.log('Socket is initializing');

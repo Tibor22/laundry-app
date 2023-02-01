@@ -26,3 +26,16 @@ laundryList  LaundryList    @relation(fields: [laundryListId], references: [id])
 laundryListId Int 
 number Int
 }
+
+model DryerList {
+id        Int      @id @default(autoincrement())
+createdAt DateTime @default(now())
+dryerNumber    DryerNumber[]
+}
+
+model DryerNumber {
+id        Int      @id @default(autoincrement())
+dryerList  DryerList    @relation(fields: [dryerListId], references: [id])
+dryerListId Int 
+number Int
+}

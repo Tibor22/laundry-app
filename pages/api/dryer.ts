@@ -1,4 +1,4 @@
-import { LaundryList, LaundryNumber, PrismaClient } from '@prisma/client';
+import { PrismaClient, DryerNumber, DryerList } from '@prisma/client';
 import { Request, Response } from 'express';
 
 const prisma = new PrismaClient();
@@ -7,30 +7,30 @@ const ListHandler = async (req: Request, res: Response) => {
 	if (req.method === 'POST') {
 		const obj = JSON.parse(req.body);
 		const { number } = obj;
-		await prisma.laundryNumber.create({
+		await prisma.dryerNumber.create({
 			data: {
 				number: Number(number),
-				laundryListId: 1,
+				dryerListId: 1,
 			},
 		});
 	}
 	if (req.method === 'DELETE' && req.query) {
 		const { id } = req.query;
-		await prisma.laundryNumber.delete({
+		await prisma.dryerNumber.delete({
 			where: { id: Number(id) },
 		});
 	}
-	const laundryList:
-		| (LaundryList & {
-				laundryNumber: LaundryNumber[];
+	const dryerList:
+		| (DryerList & {
+				dryerNumber: DryerNumber[];
 		  })
-		| null = await prisma.laundryList.findUnique({
+		| null = await prisma.dryerList.findUnique({
 		where: {
 			id: 1,
 		},
-		include: { laundryNumber: true },
+		include: { dryerNumber: true },
 	});
-	res.status(200).send({ laundryList: laundryList?.laundryNumber });
+	res.status(200).send({ dryerList: dryerList?.dryerNumber });
 };
 
 export default ListHandler;
