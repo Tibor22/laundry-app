@@ -8,8 +8,11 @@ const SocketHandler = (req: Request, res: any) => {
 		const io = new Server(res.socket.server);
 		res.socket.server.io = io;
 		io.on('connection', (socket) => {
-			socket.on('send_waiting_list', (waitingList) => {
-				socket.broadcast.emit('receive_waiting_list', waitingList);
+			socket.on('send_laundry_list', (waitingList) => {
+				socket.broadcast.emit('receive_laundry_list', waitingList);
+			});
+			socket.on('send_dryer_list', (waitingList) => {
+				socket.broadcast.emit('receive_dryer_list', waitingList);
 			});
 		});
 	}

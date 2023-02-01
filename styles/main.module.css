@@ -4,7 +4,7 @@
 	background-color: red;
 	padding: 6rem;
 	border-radius: 50%;
-	width: 40rem;
+	width: 60rem;
 }
 
 .main {
@@ -55,6 +55,7 @@
 	cursor: pointer;
 	justify-self: center;
 	max-width: 70%;
+	margin-bottom: 2rem;
 }
 .form {
 	display: flex;
@@ -76,4 +77,11 @@
 	text-decoration: none;
 	display: inline-block;
 	font-size: 16px;
+}
+
+.flex {
+	display: flex;
+	gap: 6rem;
+
+	justify-content: space-around;
 }

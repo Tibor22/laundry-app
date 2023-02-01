@@ -3,10 +3,15 @@ import { Request, Response } from 'express';
 
 const prisma = new PrismaClient();
 
-const ListHandler = async (req: Request, res: Response) => {
+const DryerHandler = async (req: Request, res: Response) => {
+	console.log('REQ:', req.body);
 	if (req.method === 'POST') {
 		const obj = JSON.parse(req.body);
 		const { number } = obj;
+
+		//create list
+
+		// await prisma.dryerList.create({ data: {} });
 		await prisma.dryerNumber.create({
 			data: {
 				number: Number(number),
@@ -33,4 +38,4 @@ const ListHandler = async (req: Request, res: Response) => {
 	res.status(200).send({ dryerList: dryerList?.dryerNumber });
 };
 
-export default ListHandler;
+export default DryerHandler;
