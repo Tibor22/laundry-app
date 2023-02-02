@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import io from 'socket.io-client';
 import styles from '../styles/main.module.css';
+import LaundryComponent from '@/components/laundryComponent';
 let socket: any;
 
 const Home = () => {
@@ -63,7 +64,8 @@ const Home = () => {
 
 		if (
 			(num.laundryNum && isNaN(parseInt(num.laundryNum, 10))) ||
-			num.dryerNum === ''
+			num.laundryNum === '' ||
+			num.laundryNum === undefined
 		)
 			return;
 		const response = await fetch('/api/getList', {
@@ -82,7 +84,8 @@ const Home = () => {
 		e.preventDefault();
 		if (
 			(num.dryerNum && isNaN(parseInt(num.dryerNum, 10))) ||
-			num.dryerNum === ''
+			num.dryerNum === '' ||
+			num.dryerNum === undefined
 		)
 			return;
 		console.log('NUMber:', num.dryerNum);
@@ -152,100 +155,25 @@ const Home = () => {
 			<div className={styles.center}>
 				<h1 className={styles.header}>CALEDONIAN HOUSE</h1>
 				<div className={styles.flex}>
-					<div className={styles.wrapper}>
-						<h2 className={styles.header}>Washing</h2>
-						<p className={styles.currNum}>
-							<strong>{laundryList[0]?.number || ''}</strong>
-						</p>
-						<div onClick={handleNextLaundry} className={styles.btn}>
-							FINISHED
-						</div>
-						<h2>Waiting</h2>
-						<ul className={styles.list_container}>
-							{laundryList.slice(1).map((number) => {
-								return (
-									<li key={number.id} className={styles.item}>
-										<div></div>
-										<div>{number.number} </div>
-
-										<span
-											className={styles.remove}
-											onClick={() => removeLaundry(number.id)}
-										>
-											X
-										</span>
-									</li>
-								);
-							})}
-						</ul>
-						<div className={styles.form_controller}>
-							<label>
-								Laundry:{' '}
-								<input
-									className={styles.add_input}
-									placeholder='Add you number to the waiting list'
-									onChange={(event) => {
-										setNum({ ...num, laundryNum: event.target.value });
-									}}
-									value={num?.laundryNum || ''}
-								/>
-							</label>
-							<button
-								className={styles.button}
-								onClick={(e) => handleAddLaundry(e)}
-							>
-								Add Number
-							</button>
-						</div>
-					</div>
+					<LaundryComponent
+						handleAdd={handleAddLaundry}
+						num={num}
+						setNum={setNum}
+						remove={removeLaundry}
+						handleNext={handleNextLaundry}
+						list={laundryList}
+						name={'Laundry'}
+					/>
 					<div className={styles.center_line}></div>
-					<div className={styles.wrapper}>
-						<h2 className={styles.header}>Dryer</h2>
-						<p className={styles.currNum}>
-							<strong>{dryerList[0]?.number || ''}</strong>
-						</p>
-
-						<div onClick={handleNextDryer} className={styles.btn}>
-							FINISHED
-						</div>
-						<h2>Waiting</h2>
-						<ul className={styles.list_container}>
-							{dryerList.slice(1).map((number) => {
-								return (
-									<li key={number.id} className={styles.item}>
-										<div></div>
-										<div>{number.number} </div>
-										<span
-											className={styles.remove}
-											onClick={() => removeDryer(number.id)}
-										>
-											X
-										</span>
-									</li>
-								);
-							})}
-						</ul>
-						<div className={styles.form_controller}>
-							<label>
-								Dryer:{' '}
-								<input
-									type='text'
-									className={styles.add_input}
-									placeholder='Add you number to the waiting list'
-									onChange={(event) => {
-										setNum({ ...num, dryerNum: event.target.value });
-									}}
-									value={num?.dryerNum || ''}
-								/>
-							</label>
-							<button
-								className={styles.button}
-								onClick={(e) => handleAddDryer(e)}
-							>
-								Add Number
-							</button>
-						</div>
-					</div>
+					<LaundryComponent
+						handleAdd={handleAddDryer}
+						num={num}
+						setNum={setNum}
+						remove={removeDryer}
+						handleNext={handleNextDryer}
+						list={dryerList}
+						name={'Dryer'}
+					/>
 				</div>
 			</div>
 		</main>
