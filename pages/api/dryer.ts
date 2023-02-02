@@ -4,7 +4,6 @@ import { Request, Response } from 'express';
 const prisma = new PrismaClient();
 
 const DryerHandler = async (req: Request, res: Response) => {
-	console.log('REQ:', req.body);
 	if (req.method === 'POST') {
 		const obj = JSON.parse(req.body);
 		const { number } = obj;

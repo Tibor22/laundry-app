@@ -1,5 +1,19 @@
+@import url('https://fonts.googleapis.com/css2?family=Itim&display=swap');
+
 * {
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
+	font-family: 'Itim', cursive;
+	color: white;
+}
+
+html {
+	font-size: 62.5%;
+}
+
+@media only screen and (max-width: 600px) {
+	html {
+		font-size: 50%;
+	}
 }
