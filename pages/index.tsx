@@ -23,11 +23,16 @@ const Home = () => {
 	type Num = {
 		laundryNum?: string;
 		dryerNum?: string;
+		twiceLaundry: boolean;
+		twiceDryer: boolean;
 	};
 
 	const [laundryList, setLaundryList] = useState<LaundryList>([]);
 	const [dryerList, setDryerList] = useState<DryerList>([]);
-	const [num, setNum] = useState<Num>({});
+	const [num, setNum] = useState<Num>({
+		twiceLaundry: false,
+		twiceDryer: false,
+	});
 	const [play] = useSound('/sounds/ping.mp3');
 	console.log(num);
 
@@ -78,14 +83,14 @@ const Home = () => {
 			return;
 		const response = await fetch('/api/getList', {
 			method: 'POST',
-			body: JSON.stringify({ number: num.laundryNum }),
+			body: JSON.stringify({ number: num.laundryNum, twice: num.twiceLaundry }),
 		});
 
 		const list = await response.json();
 		socket.emit('send_laundry_list', {
 			waitingList: list.laundryList,
 		});
-		setNum({ ...num, laundryNum: '' });
+		setNum({ ...num, laundryNum: '', twiceLaundry: false });
 		setLaundryList(list.laundryList);
 	};
 	const handleAddDryer = async (e: any) => {
@@ -99,14 +104,14 @@ const Home = () => {
 			return;
 		const response = await fetch('/api/dryer', {
 			method: 'POST',
-			body: JSON.stringify({ number: num.dryerNum }),
+			body: JSON.stringify({ number: num.dryerNum, twice: num.twiceDryer }),
 		});
 
 		const list = await response.json();
 		socket.emit('send_dryer_list', {
 			waitingList: list.dryerList,
 		});
-		setNum({ ...num, dryerNum: '' });
+		setNum({ ...num, dryerNum: '', twiceDryer: false });
 		setDryerList(list.dryerList);
 	};
 

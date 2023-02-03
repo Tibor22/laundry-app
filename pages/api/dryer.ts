@@ -5,15 +5,16 @@ import prisma from '../../prisma/init';
 const DryerHandler = async (req: Request, res: Response) => {
 	if (req.method === 'POST') {
 		const obj = JSON.parse(req.body);
-		const { number } = obj;
+		const { number, twice } = obj;
 
 		//create list
-
+		console.log({ number, twice });
 		// await prisma.dryerList.create({ data: {} });
 		await prisma.dryerNumber.create({
 			data: {
 				number: Number(number),
 				dryerListId: 1,
+				twice: Boolean(twice),
 			},
 		});
 	}

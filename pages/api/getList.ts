@@ -1,16 +1,18 @@
-import { LaundryList, LaundryNumber, PrismaClient } from '@prisma/client';
+import { LaundryList, LaundryNumber } from '@prisma/client';
 import { Request, Response } from 'express';
 
-const prisma = new PrismaClient();
+import prisma from '../../prisma/init';
 
 const ListHandler = async (req: Request, res: Response) => {
 	if (req.method === 'POST') {
 		const obj = JSON.parse(req.body);
-		const { number } = obj;
+		const { number, twice } = obj;
+		console.log({ number, twice });
 		await prisma.laundryNumber.create({
 			data: {
 				number: Number(number),
 				laundryListId: 1,
+				twice: Boolean(twice),
 			},
 		});
 	}
