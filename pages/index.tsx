@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import io from 'socket.io-client';
 import styles from '../styles/main.module.css';
 import LaundryComponent from '@/components/laundryComponent';
+import useSound from 'use-sound';
+
 let socket: any;
 
 const Home = () => {
@@ -26,8 +28,12 @@ const Home = () => {
 	const [laundryList, setLaundryList] = useState<LaundryList>([]);
 	const [dryerList, setDryerList] = useState<DryerList>([]);
 	const [num, setNum] = useState<Num>({});
-
+	const [play] = useSound('/sounds/ping.mp3');
 	console.log(num);
+
+	// const playPing = () => {
+	// 	play();
+	// };
 
 	useEffect(() => {
 		const socketInitializer = async () => {
@@ -38,14 +44,16 @@ const Home = () => {
 			});
 
 			socket.on('receive_laundry_list', (waitingList: any) => {
+				play();
 				setLaundryList(waitingList.waitingList);
 			});
 			socket.on('receive_dryer_list', (waitingList: any) => {
+				play();
 				setDryerList(waitingList.waitingList);
 			});
 		};
 		socketInitializer();
-	}, []);
+	}, [play]);
 
 	useEffect(() => {
 		const getList = async () => {
@@ -82,13 +90,13 @@ const Home = () => {
 	};
 	const handleAddDryer = async (e: any) => {
 		e.preventDefault();
+
 		if (
 			(num.dryerNum && isNaN(parseInt(num.dryerNum, 10))) ||
 			num.dryerNum === '' ||
 			num.dryerNum === undefined
 		)
 			return;
-		console.log('NUMber:', num.dryerNum);
 		const response = await fetch('/api/dryer', {
 			method: 'POST',
 			body: JSON.stringify({ number: num.dryerNum }),
@@ -138,6 +146,7 @@ const Home = () => {
 		setLaundryList(list.laundryList);
 	};
 	const removeDryer = async (id: number) => {
+		let type = 'dryer';
 		const response = await fetch(`/api/dryer?id=${id}`, {
 			method: 'DELETE',
 		});
@@ -176,6 +185,10 @@ const Home = () => {
 					/>
 				</div>
 			</div>
+			{/* <div className={styles.play} onClick={() => playPing()}>
+				Ping!
+			</div> */}
+			;
 		</main>
 	);
 };

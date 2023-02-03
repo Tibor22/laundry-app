@@ -25,6 +25,7 @@ id        Int      @id @default(autoincrement())
 laundryList  LaundryList    @relation(fields: [laundryListId], references: [id])
 laundryListId Int 
 number Int
+twice Boolean
 }
 
 model DryerList {
@@ -38,4 +39,5 @@ id        Int      @id @default(autoincrement())
 dryerList  DryerList    @relation(fields: [dryerListId], references: [id])
 dryerListId Int 
 number Int
+twice Boolean
 }

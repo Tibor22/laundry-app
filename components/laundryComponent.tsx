@@ -38,9 +38,10 @@ export default function LaundryComponent({
 	name,
 }: Props) {
 	console.log(list);
+
 	return (
 		<div className={styles.wrapper}>
-			<h2 className={styles.header}>Washing</h2>
+			<h2 className={styles.header}>{name}</h2>
 			<p className={styles.currNum}>
 				<strong>{list[0]?.number || ''}</strong>
 			</p>

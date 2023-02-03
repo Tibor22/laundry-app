@@ -1,7 +1,6 @@
-import { PrismaClient, DryerNumber, DryerList } from '@prisma/client';
+import { DryerNumber, DryerList } from '@prisma/client';
 import { Request, Response } from 'express';
-
-const prisma = new PrismaClient();
+import prisma from '../../prisma/init';
 
 const DryerHandler = async (req: Request, res: Response) => {
 	if (req.method === 'POST') {

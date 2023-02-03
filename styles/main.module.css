@@ -143,6 +143,11 @@
 	height: 100%;
 }
 
+.play {
+	padding: 1rem;
+	color: black;
+}
+
 @media only screen and (max-width: 600px) {
 	.flex {
 		grid-template-columns: 1fr;
