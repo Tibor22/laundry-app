@@ -1,6 +1,7 @@
 // @ts-nocheck
 import { Server } from 'socket.io';
 import { Request } from 'express';
+import cors from 'cors';
 
 const SocketHandler = (req: Request, res: any) => {
 	if (res?.socket.server.io) {
@@ -8,6 +9,7 @@ const SocketHandler = (req: Request, res: any) => {
 	} else {
 		console.log('Socket is initializing');
 		const io = new Server(res.socket.server);
+		// io.use(cors({ origin: '*' }));
 		res.socket.server.io = io;
 		io.on('connection', (socket) => {
 			socket.on('send_laundry_list', (waitingList) => {
