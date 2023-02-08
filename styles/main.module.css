@@ -17,12 +17,17 @@
 	display: grid;
 	place-items: center;
 	min-height: 100vh;
-	font-size: 4rem;
 }
 
 .header {
 	text-align: center;
 	margin-bottom: 2rem;
+	font-size: 5rem;
+}
+.header_2 {
+	text-align: center;
+	margin-bottom: 2rem;
+	font-size: 4rem;
 }
 
 .currNum {
@@ -79,6 +84,7 @@
 	max-width: fit-content;
 	margin: 2rem;
 }
+
 .form {
 	display: flex;
 	justify-content: center;
@@ -98,6 +104,7 @@
 	margin: 1rem;
 	gap: 1rem;
 	position: relative;
+	font-size: 1.5rem;
 }
 
 .remove {

@@ -56,9 +56,9 @@ export default function LaundryComponent({
 			<div onClick={handleNext} className={styles.button}>
 				FINISHED
 			</div>
-			<h2>Waiting</h2>
+			<h2 className={styles.header_2}>Waiting</h2>
 			<ul className={styles.list_container}>
-				{list.slice(1).map((number) => {
+				{list.slice(1).map((number, i) => {
 					return (
 						<li key={number.id} className={styles.item}>
 							<div></div>
@@ -76,7 +76,6 @@ export default function LaundryComponent({
 			</ul>
 			<div className={styles.form_controller}>
 				<label>
-					{name}
 					<div>
 						<input
 							className={styles.add_input}

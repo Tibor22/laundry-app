@@ -3,7 +3,8 @@ import io from 'socket.io-client';
 import styles from '../styles/main.module.css';
 import LaundryComponent from '@/components/laundryComponent';
 import useSound from 'use-sound';
-
+import InstructionsModal from '@/components/InstructionsModal';
+import 'bootstrap/dist/css/bootstrap.min.css';
 let socket: any;
 
 const Home = () => {
@@ -11,11 +12,13 @@ const Home = () => {
 		id: number;
 		laundryListId: number;
 		number: number;
+		twice: boolean;
 	};
 	type DryerNumber = {
 		id: number;
 		dryerListId: number;
 		number: number;
+		twice: boolean;
 	};
 	type LaundryList = LaundryNumber[] | [];
 	type DryerList = DryerNumber[] | [];
@@ -34,11 +37,6 @@ const Home = () => {
 		twiceDryer: false,
 	});
 	const [play] = useSound('/sounds/ping.mp3');
-	console.log(num);
-
-	// const playPing = () => {
-	// 	play();
-	// };
 
 	useEffect(() => {
 		const socketInitializer = async () => {
@@ -62,7 +60,7 @@ const Home = () => {
 
 	useEffect(() => {
 		const getList = async () => {
-			const response1 = await fetch('/api/getList');
+			const response1 = await fetch('/api/laundry');
 			const list1 = await response1.json();
 			const response2 = await fetch('/api/dryer');
 			const list2 = await response2.json();
@@ -81,7 +79,7 @@ const Home = () => {
 			num.laundryNum === undefined
 		)
 			return;
-		const response = await fetch('/api/getList', {
+		const response = await fetch('/api/laundry', {
 			method: 'POST',
 			body: JSON.stringify({ number: num.laundryNum, twice: num.twiceLaundry }),
 		});
@@ -117,7 +115,7 @@ const Home = () => {
 
 	const handleNextLaundry = async () => {
 		if (laundryList.length <= 0) return;
-		const response = await fetch(`/api/getList?id=${laundryList[0].id}`, {
+		const response = await fetch(`/api/laundry?id=${laundryList[0].id}`, {
 			method: 'DELETE',
 		});
 		const list = await response.json();
@@ -141,7 +139,7 @@ const Home = () => {
 	};
 
 	const removeLaundry = async (id: number) => {
-		const response = await fetch(`/api/getList?id=${id}`, {
+		const response = await fetch(`/api/laundry?id=${id}`, {
 			method: 'DELETE',
 		});
 		const list = await response.json();
@@ -190,10 +188,7 @@ const Home = () => {
 					/>
 				</div>
 			</div>
-			{/* <div className={styles.play} onClick={() => playPing()}>
-				Ping!
-			</div> */}
-			;
+			<InstructionsModal />;
 		</main>
 	);
 };
