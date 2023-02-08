@@ -5,31 +5,10 @@ import LaundryComponent from '@/components/laundryComponent';
 import useSound from 'use-sound';
 import InstructionsModal from '@/components/InstructionsModal';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { DryerList, LaundryList, Num } from '../types';
 let socket: any;
 
 const Home = () => {
-	type LaundryNumber = {
-		id: number;
-		laundryListId: number;
-		number: number;
-		twice: boolean;
-	};
-	type DryerNumber = {
-		id: number;
-		dryerListId: number;
-		number: number;
-		twice: boolean;
-	};
-	type LaundryList = LaundryNumber[] | [];
-	type DryerList = DryerNumber[] | [];
-
-	type Num = {
-		laundryNum?: string;
-		dryerNum?: string;
-		twiceLaundry: boolean;
-		twiceDryer: boolean;
-	};
-
 	const [laundryList, setLaundryList] = useState<LaundryList>([]);
 	const [dryerList, setDryerList] = useState<DryerList>([]);
 	const [num, setNum] = useState<Num>({

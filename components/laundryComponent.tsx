@@ -1,26 +1,6 @@
 import { Dispatch, SetStateAction, MouseEvent, useState } from 'react';
+import { DryerList, LaundryList, Num } from '../types';
 import styles from '../styles/main.module.css';
-
-type LaundryNumber = {
-	id: number;
-	laundryListId: number;
-	number: number;
-	twice: boolean;
-};
-type DryerNumber = {
-	id: number;
-	dryerListId: number;
-	number: number;
-	twice: boolean;
-};
-type LaundryList = LaundryNumber[] | [];
-type DryerList = DryerNumber[] | [];
-type Num = {
-	laundryNum?: string;
-	dryerNum?: string;
-	twiceLaundry: boolean;
-	twiceDryer: boolean;
-};
 
 type Props = {
 	list: LaundryList | DryerList;
