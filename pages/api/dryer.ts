@@ -8,7 +8,6 @@ const DryerHandler = async (req: Request, res: Response) => {
 		const { number, twice } = obj;
 
 		//create list
-		console.log({ number, twice });
 		// await prisma.dryerList.create({ data: {} });
 		await prisma.dryerNumber.create({
 			data: {
