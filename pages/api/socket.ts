@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { Server } from 'Socket.IO';
+import { Server } from 'socket.io';
 import { Request } from 'express';
 const SocketHandler = (req: Request, res: any) => {
 	if (res?.socket.server.io) {
