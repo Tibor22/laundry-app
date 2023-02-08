@@ -7,7 +7,6 @@ const ListHandler = async (req: Request, res: Response) => {
 	if (req.method === 'POST') {
 		const obj = JSON.parse(req.body);
 		const { number, twice } = obj;
-		console.log({ number, twice });
 		await prisma.laundryNumber.create({
 			data: {
 				number: Number(number),

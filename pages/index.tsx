@@ -167,7 +167,7 @@ const Home = () => {
 					/>
 				</div>
 			</div>
-			<InstructionsModal />;
+			<InstructionsModal />
 		</main>
 	);
 };

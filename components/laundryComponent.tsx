@@ -85,8 +85,10 @@ export default function LaundryComponent({
 						>
 							X2
 						</button>
+
 						<div
 							onAnimationEnd={() => setFloating(0)}
+							// @ts-ignore:next-line
 							floating={floating}
 							className={styles.floating_numbers}
 						>
