@@ -1,5 +1,6 @@
+// @ts-nocheck
 import { Server } from 'Socket.IO';
-import { Request, Response } from 'express';
+import { Request } from 'express';
 const SocketHandler = (req: Request, res: any) => {
 	if (res?.socket.server.io) {
 		console.log('Socket is already running');
