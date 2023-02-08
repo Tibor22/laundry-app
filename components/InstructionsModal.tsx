@@ -34,15 +34,17 @@ const InstructionsModal: React.FC = () => {
 										field on the bottom.`}
 									</ListGroup.Item>
 									<ListGroup.Item as='li'>
-										{`If you wanna use laundry/dryer twice just click on "X2"
-										button.`}
+										If you wanna use laundry/dryer twice just click on
+										&quot;X2&quot; button.
 									</ListGroup.Item>
 									<ListGroup.Item as='li'>
-										{`Click on 'Add Number' to add your number to the list.`}
+										Click on &quot;Add Number&quot; to add your number to the
+										list.
 									</ListGroup.Item>
 									<ListGroup.Item variant='warning' as='li'>
-										{`If you finished with your laundry/dryer click on "FINISHED"
-										button so the next one can start their laundry/dryer.`}
+										If you finished with your laundry/dryer click on
+										&quot;FINISHED&quot; button so the next one can start their
+										laundry/dryer.
 									</ListGroup.Item>
 								</ListGroup>
 							</p>
