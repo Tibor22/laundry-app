@@ -11,11 +11,11 @@ let socket: any;
 export async function getServerSideProps() {
 	// Fetch data from external API
 	const response1 = await fetch(
-		'https://main--cerulean-bienenstitch-48fc90.netlify.app/api/laundry'
+		'https://laundry-app-caledonian.vercel.app/api/laundry'
 	);
 	const list1 = await response1.json();
 	const response2 = await fetch(
-		'https://main--cerulean-bienenstitch-48fc90.netlify.app/api/dryer'
+		'https://laundry-app-caledonian.vercel.app/api/dryer'
 	);
 	const list2 = await response2.json();
 
