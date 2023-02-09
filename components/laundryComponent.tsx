@@ -30,7 +30,7 @@ export default function LaundryComponent({
 		<div className={styles.wrapper}>
 			<h2 className={styles.header}>{name}</h2>
 			<p className={styles.currNum}>
-				{list.length >= 1 && (
+				{list && list.length >= 1 && (
 					<>
 						<strong>{list[0]?.number || ''}</strong>{' '}
 						{list[0]?.twice && <span style={{ color: '#ffa723' }}>X2</span>}
@@ -42,7 +42,8 @@ export default function LaundryComponent({
 			</div>
 			<h2 className={styles.header_2}>Waiting</h2>
 			<ul className={styles.list_container}>
-				{list.length >= 2 &&
+				{list &&
+					list.length >= 2 &&
 					list.slice(1).map((number, i) => {
 						return (
 							<li key={number.id} className={styles.item}>
