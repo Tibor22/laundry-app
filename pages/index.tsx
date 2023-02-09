@@ -10,16 +10,20 @@ let socket: any;
 
 export async function getServerSideProps() {
 	// Fetch data from external API
-	const response1 = await fetch('http://localhost:3000/api/laundry');
+	const response1 = await fetch(
+		'https://main--cerulean-bienenstitch-48fc90.netlify.app/api/laundry'
+	);
 	const list1 = await response1.json();
-	const response2 = await fetch('http://localhost:3000/api/dryer');
+	const response2 = await fetch(
+		'https://main--cerulean-bienenstitch-48fc90.netlify.app/api/dryer'
+	);
 	const list2 = await response2.json();
 
 	// Pass data to the page via props
 	return { props: { list1, list2 } };
 }
 
-const Home = ({ list1, list2 }) => {
+const Home = ({ list1, list2 }: any) => {
 	console.log({ list1, list2 });
 	const [laundryList, setLaundryList] = useState<LaundryList>(
 		list1.laundryList
