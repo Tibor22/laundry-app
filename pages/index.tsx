@@ -8,27 +8,24 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { DryerList, LaundryList, Num } from '../types';
 let socket: any;
 
-export async function getServerSideProps() {
-	// Fetch data from external API
-	const response1 = await fetch(
-		'https://laundry-app-caledonian.vercel.app/api/laundry'
-	);
-	const list1 = await response1.json();
-	const response2 = await fetch(
-		'https://laundry-app-caledonian.vercel.app/api/dryer'
-	);
-	const list2 = await response2.json();
+// export async function getServerSideProps() {
+// 	// Fetch data from external API
+// 	const response1 = await fetch(
+// 		'https://laundry-app-caledonian.vercel.app/api/laundry'
+// 	);
+// 	const list1 = await response1.json();
+// 	const response2 = await fetch(
+// 		'https://laundry-app-caledonian.vercel.app/api/dryer'
+// 	);
+// 	const list2 = await response2.json();
 
-	// Pass data to the page via props
-	return { props: { list1, list2 } };
-}
+// 	// Pass data to the page via props
+// 	return { props: { list1, list2 } };
+// }
 
-const Home = ({ list1, list2 }: any) => {
-	console.log({ list1, list2 });
-	const [laundryList, setLaundryList] = useState<LaundryList>(
-		list1.laundryList
-	);
-	const [dryerList, setDryerList] = useState<DryerList>(list2.dryerList);
+const Home = () => {
+	const [laundryList, setLaundryList] = useState<LaundryList>([]);
+	const [dryerList, setDryerList] = useState<DryerList>([]);
 	const [num, setNum] = useState<Num>({
 		twiceLaundry: false,
 		twiceDryer: false,
@@ -57,19 +54,19 @@ const Home = ({ list1, list2 }: any) => {
 		socketInitializer();
 	}, [play]);
 
-	// useEffect(() => {
-	// 	const getList = async () => {
-	// 		const response1 = await fetch('/api/laundry');
-	// 		console.log('RESPONSE 1:', response1);
-	// 		const list1 = await response1.json();
-	// 		const response2 = await fetch('/api/dryer');
-	// 		console.log('RESPONSE 2:', response2);
-	// 		const list2 = await response2.json();
-	// 		setLaundryList(list1.laundryList);
-	// 		setDryerList(list2.dryerList);
-	// 	};
-	// 	getList();
-	// }, []);
+	useEffect(() => {
+		const getList = async () => {
+			const response1 = await fetch('/api/laundry');
+			console.log('RESPONSE 1:', response1);
+			const list1 = await response1.json();
+			const response2 = await fetch('/api/dryer');
+			console.log('RESPONSE 2:', response2);
+			const list2 = await response2.json();
+			setLaundryList(list1.laundryList);
+			setDryerList(list2.dryerList);
+		};
+		getList();
+	}, []);
 
 	const handleAddLaundry = async (e: any) => {
 		e.preventDefault();
