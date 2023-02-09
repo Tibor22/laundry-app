@@ -42,8 +42,10 @@ const Home = () => {
 	useEffect(() => {
 		const getList = async () => {
 			const response1 = await fetch('/api/laundry');
+			console.log('RESPONSE 1:', response1);
 			const list1 = await response1.json();
 			const response2 = await fetch('/api/dryer');
+			console.log('RESPONSE 2:', response2);
 			const list2 = await response2.json();
 			setLaundryList(list1.laundryList);
 			setDryerList(list2.dryerList);
