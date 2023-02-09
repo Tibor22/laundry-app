@@ -30,29 +30,37 @@ export default function LaundryComponent({
 		<div className={styles.wrapper}>
 			<h2 className={styles.header}>{name}</h2>
 			<p className={styles.currNum}>
-				<strong>{list[0]?.number || ''}</strong>{' '}
-				{list[0]?.twice && <span style={{ color: '#ffa723' }}>X2</span>}
+				{list.length >= 1 && (
+					<>
+						<strong>{list[0]?.number || ''}</strong>{' '}
+						{list[0]?.twice && <span style={{ color: '#ffa723' }}>X2</span>}
+					</>
+				)}
 			</p>
 			<div onClick={handleNext} className={styles.button}>
 				FINISHED
 			</div>
 			<h2 className={styles.header_2}>Waiting</h2>
 			<ul className={styles.list_container}>
-				{list.slice(1).map((number, i) => {
-					return (
-						<li key={number.id} className={styles.item}>
-							<div></div>
-							<div>
-								{number.number}{' '}
-								{number.twice && <span className={styles.twice}>X2</span>}
-							</div>
+				{list.length >= 2 &&
+					list.slice(1).map((number, i) => {
+						return (
+							<li key={number.id} className={styles.item}>
+								<div></div>
+								<div>
+									{number.number}{' '}
+									{number.twice && <span className={styles.twice}>X2</span>}
+								</div>
 
-							<span className={styles.remove} onClick={() => remove(number.id)}>
-								X
-							</span>
-						</li>
-					);
-				})}
+								<span
+									className={styles.remove}
+									onClick={() => remove(number.id)}
+								>
+									X
+								</span>
+							</li>
+						);
+					})}
 			</ul>
 			<div className={styles.form_controller}>
 				<label>
