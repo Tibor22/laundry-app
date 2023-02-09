@@ -4,6 +4,7 @@ import { Request } from 'express';
 import cors from 'cors';
 
 const SocketHandler = (req: Request, res: any) => {
+	console.log('RES:', res);
 	if (res?.socket.server.io) {
 		console.log('Socket is already running');
 	} else {
