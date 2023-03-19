@@ -32,7 +32,7 @@ const Home = () => {
 		twiceDryer: false,
 	});
 	const [play] = useSound('/sounds/ping.mp3');
-	const backendAddress = process.env.NEXT_PUBLIC_BACKEND_ADDRESS;
+	const backendAddress = 'https://laundry-server-b4eu.onrender.com';
 	console.log('BACKEND ADDRESS:', backendAddress);
 
 	useEffect(() => {
