@@ -6,6 +6,7 @@ import useSound from 'use-sound';
 import InstructionsModal from '@/components/InstructionsModal';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { DryerList, LaundryList, Num } from '../types';
+
 let socket: any;
 
 // export async function getServerSideProps() {
@@ -31,13 +32,13 @@ const Home = () => {
 		twiceDryer: false,
 	});
 	const [play] = useSound('/sounds/ping.mp3');
+	const backendAddress = process.env.NEXT_PUBLIC_BACKEND_ADDRESS;
+	console.log('BACKEND ADDRESS:', backendAddress);
 
 	useEffect(() => {
 		const socketInitializer = async () => {
-			await fetch('/api/socket');
+			socket = io(`${backendAddress}`);
 
-			socket = io();
-			console.log('SOCKET:', socket);
 			socket.on('connect', () => {
 				console.log('connected');
 			});
@@ -56,11 +57,9 @@ const Home = () => {
 
 	useEffect(() => {
 		const getList = async () => {
-			const response1 = await fetch('/api/laundry');
-			console.log('RESPONSE 1:', response1);
+			const response1 = await fetch(`${backendAddress}/laundries`);
 			const list1 = await response1.json();
-			const response2 = await fetch('/api/dryer');
-			console.log('RESPONSE 2:', response2);
+			const response2 = await fetch(`${backendAddress}/dryers`);
 			const list2 = await response2.json();
 			setLaundryList(list1.laundryList);
 			setDryerList(list2.dryerList);
@@ -77,7 +76,10 @@ const Home = () => {
 			num.laundryNum === undefined
 		)
 			return;
-		const response = await fetch('/api/laundry', {
+		const response = await fetch(`${backendAddress}/laundries`, {
+			headers: {
+				'Content-Type': 'application/json',
+			},
 			method: 'POST',
 			body: JSON.stringify({ number: num.laundryNum, twice: num.twiceLaundry }),
 		});
@@ -98,7 +100,10 @@ const Home = () => {
 			num.dryerNum === undefined
 		)
 			return;
-		const response = await fetch('/api/dryer', {
+		const response = await fetch(`${backendAddress}/dryers`, {
+			headers: {
+				'Content-Type': 'application/json',
+			},
 			method: 'POST',
 			body: JSON.stringify({ number: num.dryerNum, twice: num.twiceDryer }),
 		});
@@ -113,9 +118,15 @@ const Home = () => {
 
 	const handleNextLaundry = async () => {
 		if (laundryList.length <= 0) return;
-		const response = await fetch(`/api/laundry?id=${laundryList[0].id}`, {
-			method: 'DELETE',
-		});
+		const response = await fetch(
+			`${backendAddress}/laundries?id=${laundryList[0].id}`,
+			{
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				method: 'DELETE',
+			}
+		);
 		const list = await response.json();
 		socket.emit('send_laundry_list', {
 			waitingList: list.laundryList,
@@ -125,9 +136,15 @@ const Home = () => {
 	};
 	const handleNextDryer = async () => {
 		if (dryerList.length <= 0) return;
-		const response = await fetch(`/api/dryer?id=${dryerList[0].id}`, {
-			method: 'DELETE',
-		});
+		const response = await fetch(
+			`${backendAddress}/dryers?id=${dryerList[0].id}`,
+			{
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				method: 'DELETE',
+			}
+		);
 		const list = await response.json();
 		socket.emit('send_dryer_list', {
 			waitingList: list.dryerList,
@@ -137,7 +154,10 @@ const Home = () => {
 	};
 
 	const removeLaundry = async (id: number) => {
-		const response = await fetch(`/api/laundry?id=${id}`, {
+		const response = await fetch(`${backendAddress}/laundries?id=${id}`, {
+			headers: {
+				'Content-Type': 'application/json',
+			},
 			method: 'DELETE',
 		});
 		const list = await response.json();
@@ -147,8 +167,10 @@ const Home = () => {
 		setLaundryList(list.laundryList);
 	};
 	const removeDryer = async (id: number) => {
-		let type = 'dryer';
-		const response = await fetch(`/api/dryer?id=${id}`, {
+		const response = await fetch(`${backendAddress}/dryers?id=${id}`, {
+			headers: {
+				'Content-Type': 'application/json',
+			},
 			method: 'DELETE',
 		});
 		const list = await response.json();
@@ -157,8 +179,6 @@ const Home = () => {
 		});
 		setDryerList(list.dryerList);
 	};
-
-	console.log(num);
 
 	return (
 		<main className={styles.main}>
