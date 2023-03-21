@@ -27,6 +27,7 @@ let socket: any;
 const Home = () => {
 	const [laundryList, setLaundryList] = useState<LaundryList>([]);
 	const [dryerList, setDryerList] = useState<DryerList>([]);
+	const [sending, setSending] = useState<any>(true);
 	const [num, setNum] = useState<Num>({
 		twiceLaundry: false,
 		twiceDryer: false,
@@ -73,9 +74,12 @@ const Home = () => {
 		if (
 			(num.laundryNum && isNaN(parseInt(num.laundryNum, 10))) ||
 			num.laundryNum === '' ||
-			num.laundryNum === undefined
-		)
+			num.laundryNum === undefined ||
+			sending === false
+		) {
 			return;
+		}
+		setSending(false);
 		const response = await fetch(`${backendAddress}/laundries`, {
 			headers: {
 				'Content-Type': 'application/json',
@@ -90,6 +94,7 @@ const Home = () => {
 		});
 		setNum({ ...num, laundryNum: '', twiceLaundry: false });
 		setLaundryList(list.laundryList);
+		setSending(true);
 	};
 	const handleAddDryer = async (e: any) => {
 		e.preventDefault();
@@ -97,9 +102,12 @@ const Home = () => {
 		if (
 			(num.dryerNum && isNaN(parseInt(num.dryerNum, 10))) ||
 			num.dryerNum === '' ||
-			num.dryerNum === undefined
-		)
+			num.dryerNum === undefined ||
+			sending === false
+		) {
 			return;
+		}
+		setSending(false);
 		const response = await fetch(`${backendAddress}/dryers`, {
 			headers: {
 				'Content-Type': 'application/json',
@@ -114,6 +122,7 @@ const Home = () => {
 		});
 		setNum({ ...num, dryerNum: '', twiceDryer: false });
 		setDryerList(list.dryerList);
+		setSending(true);
 	};
 
 	const handleNextLaundry = async () => {
@@ -193,6 +202,7 @@ const Home = () => {
 						handleNext={handleNextLaundry}
 						list={laundryList}
 						name={'Laundry'}
+						setSending={setSending}
 					/>
 					<div className={styles.center_line}></div>
 					<LaundryComponent
@@ -203,6 +213,7 @@ const Home = () => {
 						handleNext={handleNextDryer}
 						list={dryerList}
 						name={'Dryer'}
+						setSending={setSending}
 					/>
 				</div>
 			</div>

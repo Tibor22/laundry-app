@@ -10,6 +10,7 @@ type Props = {
 	num: Num;
 	handleAdd: (e: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>) => void;
 	name: string;
+	setSending: Dispatch<SetStateAction<Boolean>>;
 };
 
 export default function LaundryComponent({
@@ -20,6 +21,7 @@ export default function LaundryComponent({
 	num,
 	handleAdd,
 	name,
+	setSending,
 }: Props) {
 	console.log(list);
 
